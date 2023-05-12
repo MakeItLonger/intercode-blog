@@ -17,8 +17,10 @@ export class HeaderComponent {
   }
 
   onHome() {
+    if (this.selectedItem) {
+      this.postsService.filteredPost.next('');
+    }
     this.selectedItem = '';
-    this.postsService.filteredPost.next('');
   }
 
   onPickTopic(event: MouseEvent) {
