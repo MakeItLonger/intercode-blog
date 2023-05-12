@@ -1,0 +1,5 @@
+<h3 *ngIf="newMode; else editMode">New Mode</h3>
+<ng-template #editMode>
+  <h3>Edit Mode, ID - {{ id }}</h3>
+</ng-template>
+<p>edit works!</p>

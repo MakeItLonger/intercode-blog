@@ -1,0 +1,81 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "node_modules/*",
+    ".eslintrc.js",
+    "karma.conf.js",
+    "protractor.conf.js",
+    "src/test.ts",
+    "src/polyfills.ts"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.app.json", "tsconfig.spec.json"],
+        "tsconfigRootDir": ".",
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            "types": {
+              "Object": {
+                "message": "Use {} instead.",
+                "fixWith": "{}"
+              },
+              "String": {
+                "message": "Use 'string' instead.",
+                "fixWith": "string"
+              },
+              "Number": {
+                "message": "Use 'number' instead.",
+                "fixWith": "number"
+              },
+              "Boolean": {
+                "message": "Use 'boolean' instead.",
+                "fixWith": "boolean"
+              },
+              "Symbol": {
+                "message": "Use 'symbol' instead.",
+                "fixWith": "symbol"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "@angular-eslint",
+    "eslint-plugin-import",
+    "eslint-plugin-jsdoc",
+    "eslint-plugin-prefer-arrow",
+    "eslint-plugin-unicorn"
+  ],
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  }
+}

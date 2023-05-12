@@ -1,1 +1,26 @@
-<p>header works!</p>
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <a mat-list-item routerLink="/" routerLinkActive="active">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+    </a>
+  </button>
+  <span>Intercode blog</span>
+  <span class="example-spacer"></span>
+  <mat-nav-list role="navigation">
+    <button
+      *ngFor="let item of menu"
+      [ngClass]="{ 'active-menu': item === selectedItem }"
+      (click)="onSelect(item)"
+      mat-list-item
+    >
+      {{ item }}
+    </button>
+    <!-- <button mat-list-item>Home</button>
+    <button mat-list-item>Hobby</button>
+    <button mat-list-item>Travel</button> -->
+  </mat-nav-list>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <a mat-list-item routerLink="/new"><mat-icon>add</mat-icon></a>
+  </button>
+</mat-toolbar>

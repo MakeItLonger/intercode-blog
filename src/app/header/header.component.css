@@ -1,0 +1,42 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+[mat-icon-button] {
+  margin-right: 20px;
+}
+
+mat-toolbar {
+  min-height: 80px;
+  margin-bottom: 20px;
+}
+
+mat-nav-list {
+  display: flex;
+  gap: 30px;
+}
+
+[mat-list-item] {
+  flex: 1 1 auto;
+  width: auto;
+  border: none;
+}
+
+button {
+  cursor: pointer;
+  min-width: 40px;
+  padding: 0;
+}
+
+button > a {
+  padding: 0;
+  cursor: pointer;
+}
+
+button > a > mat-icon {
+  cursor: pointer;
+}
+
+.active-menu {
+  background-color: rgba(0, 0, 0, 0.3);
+}
