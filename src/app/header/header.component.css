@@ -7,8 +7,11 @@
 }
 
 mat-toolbar {
+  padding-left: 40px;
+  padding-right: 40px;
   min-height: 80px;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 
 mat-nav-list {
@@ -17,9 +20,19 @@ mat-nav-list {
 }
 
 [mat-list-item] {
-  flex: 1 1 auto;
-  width: auto;
   border: none;
+  width: 100px;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+a[mat-list-item] {
+  width: auto;
+  padding: 0;
+  cursor: pointer;
 }
 
 button {
@@ -28,12 +41,7 @@ button {
   padding: 0;
 }
 
-button > a {
-  padding: 0;
-  cursor: pointer;
-}
-
-button > a > mat-icon {
+a > button > mat-icon {
   cursor: pointer;
 }
 

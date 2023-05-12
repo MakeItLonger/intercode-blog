@@ -1,6 +1,22 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
 :host {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+}
+
+mat-error {
+  background-color: #ffebee;
+  min-height: 40px;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
 }

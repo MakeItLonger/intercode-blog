@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Post } from './post.model';
 import { ReplaySubject } from 'rxjs';
 
@@ -7,11 +7,18 @@ import { ReplaySubject } from 'rxjs';
   providedIn: 'root',
 })
 export class PostsService {
-  filteredPost = new ReplaySubject();
+  filteredPost = new ReplaySubject<string>();
+  postsUrl = 'https://645c9d6de01ac610588e2af3.mockapi.io/posts';
 
   constructor(private http: HttpClient) {}
 
   getPosts() {
-    return this.http.get<Post[]>('https://645c9d6de01ac610588e2af3.mockapi.io/posts');
+    return this.http.get<Post[]>(this.postsUrl);
+  }
+
+  getPostsByTopic(topic: string) {
+    return this.http.get<Post[]>(this.postsUrl, {
+      params: new HttpParams().set('topic', topic),
+    });
   }
 }

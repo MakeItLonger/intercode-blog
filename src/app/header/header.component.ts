@@ -15,4 +15,36 @@ export class HeaderComponent {
   onSelect(item: string) {
     this.selectedItem = item;
   }
+
+  onHome() {
+    this.selectedItem = '';
+    this.postsService.filteredPost.next('');
+  }
+
+  onPickTopic(event: MouseEvent) {
+    let topic = (event.target as HTMLInputElement).outerText;
+
+    switch (
+      //delete after adding real backend
+      topic
+    ) {
+      case 'Life style':
+        topic = 'West';
+        break;
+      case 'Home':
+        topic = 'East';
+        break;
+      case 'Hobby':
+        topic = 'South';
+        break;
+      case 'Travel':
+        topic = 'North';
+        break;
+      default:
+        topic = '';
+        break;
+    }
+
+    this.postsService.filteredPost.next(topic);
+  }
 }
