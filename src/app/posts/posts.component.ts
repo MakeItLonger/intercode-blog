@@ -11,7 +11,6 @@ export class PostsComponent implements OnInit {
   posts?: Post[];
   isFetching = false;
   error = null;
-  //filteredState = false;
 
   constructor(private postsService: PostsService) {}
 

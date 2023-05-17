@@ -3,7 +3,6 @@ export interface Post {
   title: string;
   content: string;
   topic: string;
-  image: string;
-  comments: string[];
-  createdAt: Date;
+  picture: string;
+  createdAt?: Date;
 }
