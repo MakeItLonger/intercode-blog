@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-edit',
@@ -10,16 +12,37 @@ export class EditComponent implements OnInit {
   id?: number;
   newMode? = true;
   files: any[] = [];
+  creationPostForm!: FormGroup;
+  pictureData?: string | null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private postsService: PostsService) {}
 
   ngOnInit(): void {
+    this.creationPostForm = new FormGroup({
+      title: new FormControl(null),
+      topic: new FormControl(null),
+      content: new FormControl(null),
+      picture: new FormControl(null),
+    });
+
     this.id = +this.route.snapshot.params['id'];
     this.newMode = this.id ? false : true;
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.newMode = this.id ? false : true;
     });
+  }
+
+  onCreatePost() {
+    this.postsService.createPost(
+      this.creationPostForm.value.title,
+      this.creationPostForm.value.topic,
+      this.creationPostForm.value.content,
+      this.creationPostForm.value.picture,
+    );
+    this.creationPostForm.reset();
+    this.pictureData = null;
+    this.files.length = 0;
   }
 
   onFileDropped($event: any) {
@@ -32,6 +55,16 @@ export class EditComponent implements OnInit {
   fileBrowseHandler($event: Event) {
     const target = $event.target as HTMLInputElement;
     const files = target.files as any;
+    const file = files[0];
+    this.creationPostForm.patchValue({ picture: file });
+    const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (file && allowedFileTypes.includes(file.type)) {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.pictureData = (e.target as FileReader).result as string;
+      };
+      reader.readAsDataURL(file);
+    }
     this.prepareFilesList(files);
   }
 

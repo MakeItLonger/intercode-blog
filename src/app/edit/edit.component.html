@@ -1,13 +1,12 @@
-<div class="wrapper" *ngIf="newMode; else editMode">
-  <h3>Post Creation</h3>
-
+<h3 *ngIf="newMode">Post Creation</h3>
+<form [formGroup]="creationPostForm" class="form-edit" *ngIf="newMode; else editMode" (ngSubmit)="onCreatePost()">
   <mat-form-field>
     <mat-label>Title</mat-label>
-    <input matInput />
+    <input formControlName="title" matInput />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Topic</mat-label>
-    <mat-select>
+    <mat-select formControlName="topic">
       <mat-option value="Life style">Life style</mat-option>
       <mat-option value="Home">Home</mat-option>
       <mat-option value="Hobby">Hobby</mat-option>
@@ -30,9 +29,9 @@
       </g>
     </svg>
 
-    <h3>Drag and drop pictures for article here</h3>
+    <h3>Drag and drop pictures for post here</h3>
     <h3>or</h3>
-    <label for="fileDropRef">Browse for file</label>
+    <label for="fileDropRef">Browse for files</label>
   </div>
   <div class="files-list">
     <div class="single-file" *ngFor="let file of files; let i = index">
@@ -97,9 +96,11 @@
   </div>
   <mat-form-field>
     <mat-label>Content</mat-label>
-    <textarea rows="10" matInput></textarea>
+    <textarea formControlName="content" rows="10" matInput></textarea>
   </mat-form-field>
-</div>
+
+  <button type="submit" mat-raised-button color="primary">Submit</button>
+</form>
 
 <ng-template #editMode>
   <h3>Edit Mode, ID - {{ id }}</h3>

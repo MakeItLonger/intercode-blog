@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Post } from '../post.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post',
@@ -8,11 +9,12 @@ import { Post } from '../post.model';
 })
 export class PostComponent implements OnInit {
   @Input('card') post!: Post;
+  @HostListener('click') toFullPost() {
+    this.router.navigate(['/fullpost', this.id]);
+  }
   id?: number;
 
-  onClick(): void {
-    console.log(1);
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.id = Number(this.post?.id);

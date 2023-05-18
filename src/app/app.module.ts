@@ -14,9 +14,17 @@ import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './post/post.component';
 import { DragDropFileDirective } from './drag-drop-file.directive';
 import { ProgressComponent } from './edit/progress/progress.component';
-
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, EditComponent, FullpostComponent, PostsComponent, PostComponent, DragDropFileDirective, ProgressComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    EditComponent,
+    FullpostComponent,
+    PostsComponent,
+    PostComponent,
+    DragDropFileDirective,
+    ProgressComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, HeaderModule, HttpClientModule, PostsModule],
   providers: [],
   bootstrap: [AppComponent],
