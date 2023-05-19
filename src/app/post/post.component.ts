@@ -10,13 +10,13 @@ import { Router } from '@angular/router';
 export class PostComponent implements OnInit {
   @Input('card') post!: Post;
   @HostListener('click') toFullPost() {
-    this.router.navigate(['/fullpost', this.id]);
+    this.router.navigate(['/post', this.id]);
   }
-  id?: number;
+  id?: number | string;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.id = Number(this.post?.id);
+    this.id = this.post?._id;
   }
 }

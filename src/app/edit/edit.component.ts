@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostsService } from '../posts.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class EditComponent implements OnInit {
   creationPostForm!: FormGroup;
   pictureData?: string | null;
 
-  constructor(private route: ActivatedRoute, private postsService: PostsService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private postsService: PostsService) {}
 
   ngOnInit(): void {
     this.creationPostForm = new FormGroup({
@@ -34,15 +34,19 @@ export class EditComponent implements OnInit {
   }
 
   onCreatePost() {
-    this.postsService.createPost(
-      this.creationPostForm.value.title,
-      this.creationPostForm.value.topic,
-      this.creationPostForm.value.content,
-      this.creationPostForm.value.picture,
-    );
-    this.creationPostForm.reset();
-    this.pictureData = null;
-    this.files.length = 0;
+    this.postsService
+      .createPost(
+        this.creationPostForm.value.title,
+        this.creationPostForm.value.topic,
+        this.creationPostForm.value.content,
+        this.creationPostForm.value.picture,
+      )
+      .subscribe((post) => {
+        this.creationPostForm.reset();
+        this.pictureData = null;
+        this.files.length = 0;
+        this.router.navigate(['/post', String(post._id)]);
+      });
   }
 
   onFileDropped($event: any) {
