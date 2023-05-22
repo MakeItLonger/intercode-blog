@@ -32,6 +32,7 @@ export class FullpostComponent implements OnInit, OnDestroy {
     });
   }
   routeToEditMode() {
+    console.log(1);
     this.router.navigate(['/edit', this.id]);
   }
 

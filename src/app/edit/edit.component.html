@@ -1,5 +1,6 @@
-<h3 *ngIf="newMode">Post Creation</h3>
-<form [formGroup]="creationPostForm" class="form-edit" *ngIf="newMode; else editMode" (ngSubmit)="onCreatePost()">
+<h3 *ngIf="newMode; else PostEdition">Post Creation</h3>
+<ng-template #PostEdition><h3>Post Edition</h3></ng-template>
+<form [formGroup]="creationPostForm" class="form-edit" (ngSubmit)="onCreatePost()">
   <mat-form-field>
     <mat-label>Title</mat-label>
     <input formControlName="title" matInput />
@@ -87,7 +88,6 @@
         <p class="size">
           {{ formatBytes(file?.size, undefined) }}
         </p>
-        <app-progress [progress]="file?.progress"></app-progress>
       </div>
 
       <div class="delete" (click)="deleteFile(i)">

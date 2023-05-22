@@ -36,4 +36,21 @@ export class PostsService {
 
     return this.http.post<Post>(this.postsUrl, postData);
   }
+
+  editPost(id: string, title: string, topic: string, content: string, picture: File): Observable<Post> {
+    const postData = new FormData();
+    postData.append('_id', id);
+    postData.append('title', title);
+    postData.append('topic', topic);
+    postData.append('content', content);
+    if (picture) {
+      postData.append('picture', picture, title);
+    }
+
+    // postData.forEach((value, key) => {
+    //   console.log(key, value);
+    // });
+
+    return this.http.put<Post>(this.postsUrl, postData);
+  }
 }

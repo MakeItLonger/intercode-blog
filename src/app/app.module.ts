@@ -13,7 +13,6 @@ import { FullpostComponent } from './fullpost/fullpost.component';
 import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './post/post.component';
 import { DragDropFileDirective } from './drag-drop-file.directive';
-import { ProgressComponent } from './edit/progress/progress.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +22,6 @@ import { ProgressComponent } from './edit/progress/progress.component';
     PostsComponent,
     PostComponent,
     DragDropFileDirective,
-    ProgressComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, HeaderModule, HttpClientModule, PostsModule],
   providers: [],
