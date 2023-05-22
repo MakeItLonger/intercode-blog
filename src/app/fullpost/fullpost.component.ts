@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PostsService } from '../posts.service';
 import { Post } from '../post.model';
 import { BehaviorSubject } from 'rxjs';
+import { SlideInterface } from './picture-slider/slide.interface';
 
 @Component({
   selector: 'app-fullpost',
@@ -12,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 export class FullpostComponent implements OnInit, OnDestroy {
   id!: string;
   post!: Post;
+  slides: SlideInterface[] = [];
 
   isFetching$ = new BehaviorSubject<boolean>(true);
 
@@ -25,6 +27,12 @@ export class FullpostComponent implements OnInit, OnDestroy {
     this.postsService.getPostById(this.id).subscribe({
       next: (postAPI) => {
         this.post = postAPI;
+        Array.from(this.post.picture).forEach((picture, index) => {
+          this.slides.push({
+            title: String(index),
+            url: picture,
+          });
+        });
       },
       complete: () => {
         this.isFetching$.next(false);
@@ -32,7 +40,6 @@ export class FullpostComponent implements OnInit, OnDestroy {
     });
   }
   routeToEditMode() {
-    console.log(1);
     this.router.navigate(['/edit', this.id]);
   }
 

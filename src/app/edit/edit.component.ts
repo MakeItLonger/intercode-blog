@@ -13,7 +13,7 @@ export class EditComponent implements OnInit {
   newMode? = true;
   files: any[] = [];
   creationPostForm!: FormGroup;
-  pictureData?: string | null;
+  pictureData: string[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private postsService: PostsService) {}
 
@@ -54,7 +54,7 @@ export class EditComponent implements OnInit {
         )
         .subscribe((post) => {
           this.creationPostForm.reset();
-          this.pictureData = null;
+          this.pictureData = [];
           this.files.length = 0;
           this.router.navigate(['/post', post._id]);
         });
@@ -88,16 +88,16 @@ export class EditComponent implements OnInit {
   fileBrowseHandler($event: Event) {
     const target = $event.target as HTMLInputElement;
     const files = target.files as any;
-    const file = files[0];
-    this.creationPostForm.patchValue({ picture: file });
-    const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-    if (file && allowedFileTypes.includes(file.type)) {
+    this.creationPostForm.patchValue({ picture: files });
+
+    for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.pictureData = (e.target as FileReader).result as string;
+        this.pictureData.push((e.target as FileReader).result as string);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(files[i]);
     }
+
     this.prepareFilesList(files);
   }
 
@@ -110,26 +110,6 @@ export class EditComponent implements OnInit {
   }
 
   /**
-   * Simulate the upload process
-   */
-  // uploadFilesSimulator(index: number) {
-  //   setTimeout(() => {
-  //     if (index === this.files.length) {
-  //       return;
-  //     } else {
-  //       const progressInterval = setInterval(() => {
-  //         if (this.files[index].progress === 100 && this.files.length !== 0) {
-  //           clearInterval(progressInterval);
-  //           this.uploadFilesSimulator(index + 1);
-  //         } else {
-  //           this.files[index].progress += 5;
-  //         }
-  //       }, 200);
-  //     }
-  //   }, 1000);
-  // }
-
-  /**
    * Convert Files list to normal array list
    * @param files (Files List)
    */
@@ -138,7 +118,6 @@ export class EditComponent implements OnInit {
       item.progress = 0;
       this.files.push(item);
     }
-    // this.uploadFilesSimulator(0);
   }
 
   /**

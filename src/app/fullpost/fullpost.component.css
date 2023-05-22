@@ -17,10 +17,8 @@ mat-card {
   margin-left: 20px;
 }
 
-.picture {
-  display: block;
-  max-width: 800px;
-  max-height: 600px;
+.slider-wrapper {
+  margin: 0 auto 20px;
 }
 
 button {

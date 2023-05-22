@@ -8,7 +8,6 @@ import { Observable, ReplaySubject } from 'rxjs';
 })
 export class PostsService {
   filteredPost = new ReplaySubject<string>();
-  // postsUrlMock = 'https://645c9d6de01ac610588e2af3.mockapi.io/posts';
   postsUrl = 'http://localhost:5000/api/posts';
 
   constructor(private http: HttpClient) {}
@@ -27,29 +26,31 @@ export class PostsService {
     });
   }
 
-  createPost(title: string, topic: string, content: string, picture: File): Observable<Post> {
+  createPost(title: string, topic: string, content: string, picture: File[]): Observable<Post> {
     const postData = new FormData();
     postData.append('title', title);
     postData.append('topic', topic);
     postData.append('content', content);
-    postData.append('picture', picture, title);
+
+    Array.from(picture).forEach((picture: File) => {
+      postData.append('picture', picture, title);
+    });
 
     return this.http.post<Post>(this.postsUrl, postData);
   }
 
-  editPost(id: string, title: string, topic: string, content: string, picture: File): Observable<Post> {
+  editPost(id: string, title: string, topic: string, content: string, picture: File[]): Observable<Post> {
     const postData = new FormData();
     postData.append('_id', id);
     postData.append('title', title);
     postData.append('topic', topic);
     postData.append('content', content);
-    if (picture) {
-      postData.append('picture', picture, title);
-    }
 
-    // postData.forEach((value, key) => {
-    //   console.log(key, value);
-    // });
+    if (picture) {
+      Array.from(picture).forEach((picture: File, index) => {
+        postData.append('picture', picture, String(index));
+      });
+    }
 
     return this.http.put<Post>(this.postsUrl, postData);
   }

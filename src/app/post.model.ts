@@ -3,6 +3,6 @@ export interface Post {
   title: string;
   content: string;
   topic: string;
-  picture: string;
+  picture: any;
   createdAt?: Date;
 }

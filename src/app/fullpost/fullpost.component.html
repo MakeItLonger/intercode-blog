@@ -10,7 +10,10 @@
         <mat-card-subtitle>{{ post.topic }}</mat-card-subtitle>
       </mat-card-title-group>
     </mat-card-header>
-    <img class="picture" [alt]="post.title" [src]="post.picture" />
+    <!-- <img class="picture" [alt]="post.title" [src]="post.picture[0] || post.picture" /> -->
+    <div class="slider-wrapper" style="width: 300px; height: 500px">
+      <app-picture-slider [slides]="slides"></app-picture-slider>
+    </div>
     <mat-card-content>
       {{ post.content }}
     </mat-card-content>
