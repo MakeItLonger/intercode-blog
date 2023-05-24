@@ -20,3 +20,9 @@ mat-error {
   display: flex;
   align-items: center;
 }
+
+app-side-filters {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

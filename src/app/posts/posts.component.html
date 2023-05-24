@@ -1,3 +1,4 @@
+<app-side-filters></app-side-filters>
 <div class="container" *ngIf="!isFetching"><app-post *ngFor="let post of posts" [card]="post"></app-post></div>
 <mat-spinner *ngIf="isFetching && !error"></mat-spinner>
 <mat-error *ngIf="error">{{ error }}</mat-error>

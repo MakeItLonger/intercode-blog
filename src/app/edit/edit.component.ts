@@ -79,6 +79,17 @@ export class EditComponent implements OnInit {
   }
 
   onFileDropped($event: any) {
+    const files = $event;
+
+    this.creationPostForm.patchValue({ picture: files });
+
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.pictureData.push((e.target as FileReader).result as string);
+      };
+      reader.readAsDataURL(files[i]);
+    }
     this.prepareFilesList($event);
   }
 
