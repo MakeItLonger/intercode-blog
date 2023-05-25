@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../posts.service';
 import { Post } from '../post.model';
 import { map, tap } from 'rxjs/operators';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -11,6 +12,7 @@ export class PostsComponent implements OnInit {
   posts?: Post[];
   isFetching = false;
   error = null;
+  currentPage = 0;
 
   constructor(private postsService: PostsService) {}
 
@@ -50,5 +52,8 @@ export class PostsComponent implements OnInit {
         });
       }
     });
+  }
+  handlePageEvent(pageEvent: PageEvent) {
+    this.currentPage = pageEvent.pageIndex;
   }
 }

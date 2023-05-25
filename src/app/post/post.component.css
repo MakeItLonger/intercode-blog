@@ -21,3 +21,8 @@ mat-card-title-group {
 mat-card-subtitle {
   text-align: center;
 }
+
+img {
+  height: 400px;
+  width: 300px;
+}
