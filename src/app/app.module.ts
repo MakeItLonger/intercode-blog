@@ -15,6 +15,7 @@ import { PostComponent } from './post/post.component';
 import { DragDropFileDirective } from './drag-drop-file.directive';
 import { PictureSliderComponent } from './fullpost/picture-slider/picture-slider.component';
 import { SideFiltersComponent } from './posts/side-filters/side-filters.component';
+import { CommentComponent } from './fullpost/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SideFiltersComponent } from './posts/side-filters/side-filters.componen
     DragDropFileDirective,
     PictureSliderComponent,
     SideFiltersComponent,
+    CommentComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, HeaderModule, HttpClientModule, PostsModule],
   providers: [],

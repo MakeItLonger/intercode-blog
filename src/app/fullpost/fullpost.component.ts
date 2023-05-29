@@ -4,6 +4,7 @@ import { PostsService } from '../posts.service';
 import { Post } from '../post.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { SlideInterface } from './picture-slider/slide.interface';
+import { Comment } from '../comment.model';
 
 @Component({
   selector: 'app-fullpost',
@@ -16,6 +17,19 @@ export class FullpostComponent implements OnInit {
   slides: SlideInterface[] = [];
 
   isFetching$ = new BehaviorSubject<boolean>(true);
+
+  comments: Comment[] = [
+    {
+      author: 'John',
+      content: 'Great article!',
+      timestamp: new Date('2023-05-25T09:30:00'),
+    },
+    {
+      author: 'Jane',
+      content: 'Thanks for sharing.',
+      timestamp: new Date('2023-05-25T10:15:00'),
+    },
+  ];
 
   constructor(private router: Router, private route: ActivatedRoute, private postsService: PostsService) {}
 

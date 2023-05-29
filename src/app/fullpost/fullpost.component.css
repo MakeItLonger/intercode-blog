@@ -1,6 +1,9 @@
 :host {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 30px;
 }
 
 mat-card {
@@ -11,8 +14,9 @@ mat-card {
   gap: 20px;
   text-align: center;
   position: relative;
-  width: 100%;
-  max-width: 1200px;
+  width: 85vw;
+  /* width: 100%;
+  max-width: 1200px; */
   margin-right: 20px;
   margin-left: 20px;
 }
@@ -25,4 +29,20 @@ button {
   position: absolute;
   top: 10px;
   right: 0;
+}
+
+.author {
+  font-weight: bold;
+  margin-right: 8px;
+}
+.timestamp {
+  color: gray;
+}
+
+.example-form {
+  width: 50vw;
+}
+
+.example-full-width {
+  width: 100%;
 }
