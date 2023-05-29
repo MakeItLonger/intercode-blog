@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PostsService } from '../posts.service';
 import { Post } from '../post.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { SlideInterface } from './picture-slider/slide.interface';
 
 @Component({
@@ -10,7 +10,7 @@ import { SlideInterface } from './picture-slider/slide.interface';
   templateUrl: './fullpost.component.html',
   styleUrls: ['./fullpost.component.css'],
 })
-export class FullpostComponent implements OnInit, OnDestroy {
+export class FullpostComponent implements OnInit {
   id!: string;
   post!: Post;
   slides: SlideInterface[] = [];
@@ -41,9 +41,5 @@ export class FullpostComponent implements OnInit, OnDestroy {
   }
   routeToEditMode() {
     this.router.navigate(['/edit', this.id]);
-  }
-
-  ngOnDestroy(): void {
-    this.isFetching$.unsubscribe();
   }
 }

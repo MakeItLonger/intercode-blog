@@ -4,5 +4,4 @@ export interface Post {
   content: string;
   topic: string;
   picture: any;
-  createdAt?: Date;
 }

@@ -1,29 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Post } from './post.model';
-import { Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { QueryRequest } from './query-request.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  filteredPost = new ReplaySubject<string>();
+  filteredPost$ = new BehaviorSubject<QueryRequest>({
+    search: '',
+    topic: '',
+    datestart: new Date(0).toISOString(),
+    dateend: new Date().toISOString(),
+    sort: 'title',
+    page: '1',
+    limit: '5',
+  });
+  onClearFilterForm$ = new Subject<void>();
   postsUrl = 'http://localhost:5000/api/posts';
 
   constructor(private http: HttpClient) {}
 
   getPosts() {
-    return this.http.get<Post[]>(this.postsUrl);
+    return this.http.get<{ posts: Post[]; total: number }>(this.postsUrl);
+  }
+
+  getPostsByQueryParams({
+    search = '',
+    topic = '',
+    datestart = new Date(0).toISOString(),
+    dateend = new Date().toISOString(),
+    sort = 'title',
+    page = '1',
+    limit = '5',
+  }: QueryRequest = {}) {
+    const queryReqStr = `${this.postsUrl}?search=${search}&topic=${topic}&datestart=${datestart}&dateend=${dateend}&sort=${sort}&page=${page}&limit=${limit}`;
+
+    return this.http.get<{ posts: Post[]; total: number }>(queryReqStr);
   }
 
   getPostById(id: string) {
     return this.http.get<Post>(`${this.postsUrl}/${id}`);
-  }
-
-  getPostsByTopic(topic: string) {
-    return this.http.get<Post[]>(this.postsUrl, {
-      params: new HttpParams().set('topic', topic),
-    });
   }
 
   createPost(title: string, topic: string, content: string, picture: File[]): Observable<Post> {

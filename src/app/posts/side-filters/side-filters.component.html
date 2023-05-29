@@ -1,24 +1,32 @@
-<mat-form-field>
-  <mat-label>Search</mat-label>
-  <input matInput #message />
-</mat-form-field>
+<form [formGroup]="filterForm">
+  <mat-form-field>
+    <mat-label>Search</mat-label>
+    <input formControlName="search" #searchInput matInput #message />
+  </mat-form-field>
+  <!-- !dateRangeEnd.value ||  -->
+  <mat-form-field>
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input formControlName="rangeDateStart" matStartDate #dateRangeStart placeholder="Start date" />
+      <input
+        formControlName="rangeDateEnd"
+        matEndDate
+        #dateRangeEnd
+        placeholder="End date"
+        (dateChange)="onDateChange(dateRangeStart, dateRangeEnd)"
+      />
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Enter a date range</mat-label>
-  <mat-date-range-input [rangePicker]="picker">
-    <input matStartDate placeholder="Start date" />
-    <input matEndDate placeholder="End date" />
-  </mat-date-range-input>
-  <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-date-range-picker #picker></mat-date-range-picker>
-</mat-form-field>
-
-<mat-form-field>
-  <mat-label>Sort by</mat-label>
-  <mat-select disableRipple>
-    <mat-option value="1">Title</mat-option>
-    <mat-option value="2">Topic</mat-option>
-    <mat-option value="3">Date</mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-form-field>
+    <mat-label>Sort by</mat-label>
+    <mat-select formControlName="sort" (selectionChange)="onSelect($event)" disableRipple>
+      <mat-option value="title">Title</mat-option>
+      <mat-option value="topic">Topic</mat-option>
+      <mat-option value="date">Date</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
