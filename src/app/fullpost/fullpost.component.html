@@ -4,7 +4,7 @@
     <mat-card-header>
       <mat-card-title-group>
         <mat-card-title>{{ post.title | titlecase }}</mat-card-title>
-        <button (click)="routeToEditMode()" mat-icon-button>
+        <button class="edit-button" (click)="routeToEditMode()" mat-icon-button>
           <mat-icon>edit</mat-icon>
         </button>
         <mat-card-subtitle>{{ post.topic }}</mat-card-subtitle>
@@ -17,19 +17,26 @@
       {{ post.content }}
     </mat-card-content>
   </mat-card>
-  <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+  <app-comment
+    *ngFor="let comment of comments"
+    [comment]="comment"
+    (commentEdited)="onEditComment($event)"
+    (commentDeleted)="onDeleteComment($event)"
+  ></app-comment>
 
-  <form class="example-form">
+  <form class="example-form" [formGroup]="creationCommentForm" (ngSubmit)="onCreateComment()">
     <mat-form-field class="example-full-width">
       <mat-label>Enter a name</mat-label>
-      <input matInput placeholder="Name" />
+      <input formControlName="author" matInput placeholder="Name" />
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Leave a comment</mat-label>
-      <textarea matInput placeholder="Comment"></textarea>
+      <textarea formControlName="content" matInput placeholder="Comment"></textarea>
     </mat-form-field>
 
-    <button style="position: static; width: 50vw; margin-bottom: 30px" mat-raised-button color="primary">Submit</button>
+    <button class="custom-button">{{ editMode ? 'Edit' : 'Submit' }}</button>
   </form>
 </ng-template>
+
+<!-- style="position: static; width: 50vw; margin-bottom: 30px" -->
