@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../posts.service';
+import { HeaderService } from '../header.service';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,9 @@ import { PostsService } from '../posts.service';
 export class HeaderComponent {
   menu: string[] = ['Life style', 'Home', 'Hobby', 'Travel'];
   selectedItem?: string;
+  isVisibleMenu$ = this.headerService.isVisibleObs$;
 
-  constructor(private postsService: PostsService) {}
+  constructor(private postsService: PostsService, private headerService: HeaderService) {}
 
   onSelect(item: string) {
     this.selectedItem = item;
@@ -28,6 +30,7 @@ export class HeaderComponent {
     });
     this.postsService.onClearFilterForm$.next();
     this.selectedItem = '';
+    this.headerService.isVisible$.next(true);
   }
 
   onPickTopic(event: MouseEvent) {

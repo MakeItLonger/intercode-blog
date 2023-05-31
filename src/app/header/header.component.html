@@ -5,9 +5,8 @@
     </a>
     <span>Intercode blog</span>
   </div>
-
   <!-- <span class="example-spacer"></span> -->
-  <mat-nav-list role="navigation">
+  <mat-nav-list [ngStyle]="{ 'visibility': (isVisibleMenu$ | async) ? 'visible': 'hidden', }" role="navigation">
     <button
       *ngFor="let item of menu"
       [ngClass]="{ 'active-menu': item === selectedItem }"

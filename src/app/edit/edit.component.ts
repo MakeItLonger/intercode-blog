@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostsService } from '../posts.service';
+import { HeaderService } from '../header.service';
 
 @Component({
   selector: 'app-edit',
@@ -15,9 +16,16 @@ export class EditComponent implements OnInit {
   creationPostForm!: FormGroup;
   pictureData: string[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private postsService: PostsService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private postsService: PostsService,
+    private headerService: HeaderService,
+  ) {}
 
   ngOnInit(): void {
+    this.headerService.isVisible$.next(false);
+
     this.id = this.route.snapshot.params['id'];
     this.newMode = this.id ? false : true;
     this.route.params.subscribe((params: Params) => {

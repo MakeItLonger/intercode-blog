@@ -7,6 +7,7 @@ import { SlideInterface } from './picture-slider/slide.interface';
 import { Comment } from '../comment.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommentsService } from '../comments.service';
+import { HeaderService } from '../header.service';
 
 @Component({
   selector: 'app-fullpost',
@@ -33,9 +34,12 @@ export class FullpostComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private postsService: PostsService,
     private commentsService: CommentsService,
+    private headerService: HeaderService,
   ) {}
 
   ngOnInit(): void {
+    this.headerService.isVisible$.next(false);
+
     this.id = this.route.snapshot.params['id'];
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
