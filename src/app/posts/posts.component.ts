@@ -14,7 +14,7 @@ export class PostsComponent {
   posts?: Post[];
   isFetching = false;
   error = null;
-  currentPage = 0;
+  currentPage$ = this.postsService.currentPageObs$;
   total?: number;
 
   queryParams: QueryRequest = {};
@@ -37,11 +37,15 @@ export class PostsComponent {
   constructor(private postsService: PostsService) {}
 
   handlePageEvent(pageEvent: PageEvent) {
-    this.currentPage = pageEvent.pageIndex;
+    this.postsService.currentPage$.next(pageEvent.pageIndex);
 
-    const page = String(this.currentPage + 1);
+    const page = String(this.postsService.currentPage$.getValue() + 1);
+
+    // const page = String(this.currentPage + 1);
     const limit = String(pageEvent.pageSize);
 
     this.postsService.filteredPost$.next({ page, limit });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

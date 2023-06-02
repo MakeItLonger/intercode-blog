@@ -38,7 +38,8 @@ export class SideFiltersComponent implements OnInit {
     });
 
     this.inputSubject$.pipe(debounceTime(1500), distinctUntilChanged()).subscribe((search: string) => {
-      this.postsService.filteredPost$.next({ search });
+      this.postsService.filteredPost$.next({ search, page: '1' });
+      this.postsService.currentPage$.next(0);
     });
   }
 
@@ -72,11 +73,13 @@ export class SideFiltersComponent implements OnInit {
       };
     }
 
-    this.postsService.filteredPost$.next(dateRange);
+    this.postsService.filteredPost$.next({ ...dateRange, page: '1' });
+    this.postsService.currentPage$.next(0);
   }
 
   onSelect(event: MatSelectChange) {
     const value = event.value;
-    this.postsService.filteredPost$.next({ sort: value });
+    this.postsService.filteredPost$.next({ sort: value, page: '1' });
+    this.postsService.currentPage$.next(0);
   }
 }

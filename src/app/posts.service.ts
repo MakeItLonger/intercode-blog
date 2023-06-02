@@ -17,10 +17,15 @@ export class PostsService {
     page: '1',
     limit: '5',
   });
+  currentPage$ = new BehaviorSubject<number>(0);
   onClearFilterForm$ = new Subject<void>();
   postsUrl = 'http://localhost:5000/api/posts';
 
   constructor(private http: HttpClient) {}
+
+  get currentPageObs$() {
+    return this.currentPage$.asObservable();
+  }
 
   getPosts() {
     return this.http.get<{ posts: Post[]; total: number }>(this.postsUrl);

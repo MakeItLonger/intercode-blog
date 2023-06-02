@@ -36,6 +36,7 @@ export class HeaderComponent {
   onPickTopic(event: MouseEvent) {
     let topic = (event.target as HTMLInputElement).outerText;
 
-    this.postsService.filteredPost$.next({ topic });
+    this.postsService.filteredPost$.next({ topic, page: '1' });
+    this.postsService.currentPage$.next(0);
   }
 }
