@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PostsService } from '../posts.service';
 import { Post } from '../post.model';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import { SlideInterface } from './picture-slider/slide.interface';
-import { Comment } from '../comment.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommentsService } from '../comments.service';
 import { HeaderService } from '../header.service';
@@ -14,7 +13,7 @@ import { HeaderService } from '../header.service';
   templateUrl: './fullpost.component.html',
   styleUrls: ['./fullpost.component.css'],
 })
-export class FullpostComponent implements OnInit, OnDestroy {
+export class FullpostComponent implements OnInit {
   id!: string;
   post!: Post;
   slides: SlideInterface[] = [];
@@ -22,10 +21,13 @@ export class FullpostComponent implements OnInit, OnDestroy {
   editMode: boolean = false;
   commentID?: string;
 
-  comments: Comment[] = [];
+  comments$ = this.commentsService.loadedComments.pipe(
+    switchMap(() => {
+      return this.commentsService.getComments(this.id);
+    }),
+  );
 
   creationCommentForm!: FormGroup;
-  loadedCommentsSubscription!: Subscription;
 
   isFetching$ = new BehaviorSubject<boolean>(true);
 
@@ -43,10 +45,6 @@ export class FullpostComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.params['id'];
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
-    });
-
-    this.loadedCommentsSubscription = this.commentsService.loadedComments.subscribe(() => {
-      this.renderComments();
     });
 
     this.postsService.getPostById(this.id).subscribe({
@@ -114,17 +112,5 @@ export class FullpostComponent implements OnInit, OnDestroy {
     this.commentsService.deleteComment(this.commentID).subscribe(() => {
       this.commentsService.loadedComments.next('Delete comment!');
     });
-  }
-
-  renderComments() {
-    this.commentsService.getComments(this.id).subscribe({
-      next: (commentsAPI) => {
-        this.comments = commentsAPI;
-      },
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.loadedCommentsSubscription.unsubscribe();
   }
 }

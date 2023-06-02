@@ -11,7 +11,6 @@ import { map, switchMap, tap } from 'rxjs';
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent {
-  posts?: Post[];
   isFetching = false;
   error = null;
   currentPage$ = this.postsService.currentPageObs$;

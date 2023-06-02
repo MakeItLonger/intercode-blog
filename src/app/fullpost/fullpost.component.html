@@ -18,7 +18,7 @@
     </mat-card-content>
   </mat-card>
   <app-comment
-    *ngFor="let comment of comments"
+    *ngFor="let comment of comments$ | async"
     [comment]="comment"
     (commentEdited)="onEditComment($event)"
     (commentDeleted)="onDeleteComment($event)"
